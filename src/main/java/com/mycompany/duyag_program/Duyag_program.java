@@ -13,11 +13,20 @@ public class Duyag_program {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         
-       
-        System.out.println("Enter number");
+        System.out.println("Enter Name: ");
+        String name = input.toString();
+        System.out.println("Enter number: ");
         int x = input.nextInt();
-        System.out.println("Enter number");
+        System.out.println("Enter number: ");
         int y = input.nextInt();
+        
+        if (name == "john"){
+            System.out.println("Hey" + name);
+        }
+        else {
+            System.out.println("wala ka sa list boit!!");
+        }
+        
         int sum, diff, prod, quot;
         sum = y + x;
         diff = y - x;
@@ -28,14 +37,6 @@ public class Duyag_program {
         System.out.println("sum in: " + prod);
         System.out.println("sum in: " + quot);
         
-        System.out.println("Enter Name");
-        String name = input.toString();
-        if (name == "john"){
-            System.out.println("Hey" + name);
-        }
-        else {
-            System.out.println("wala ka sa list boit!!");
-        }
-
+        
     }
 }
