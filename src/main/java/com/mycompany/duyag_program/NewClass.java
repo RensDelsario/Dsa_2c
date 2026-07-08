@@ -5,7 +5,7 @@
 package com.mycompany.duyag_program;
 
 /**
- *
+ *as
  * @author CL2-PC
  */
 public class NewClass {
