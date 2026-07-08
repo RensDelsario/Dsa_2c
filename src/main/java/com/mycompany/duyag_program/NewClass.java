@@ -4,7 +4,7 @@
  */
 package com.mycompany.duyag_program;
 
-/**wala na
+/**
  *
  * @author CL2-PC
  */
