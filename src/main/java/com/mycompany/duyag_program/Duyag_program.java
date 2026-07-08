@@ -15,8 +15,10 @@ public class Duyag_program {
         
         System.out.println("Enter Name: ");
         String name = input.toString();
+        
         System.out.println("Enter number: ");
         int x = input.nextInt();
+        
         System.out.println("Enter number: ");
         int y = input.nextInt();
         
