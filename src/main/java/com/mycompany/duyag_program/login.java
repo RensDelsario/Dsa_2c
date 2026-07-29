@@ -15,10 +15,11 @@ import javax.swing.JOptionPane;
  * @author CL2-PC
  */
 public class login extends javax.swing.JFrame {
-    
+
     Connection conn;
     PreparedStatement pst;
     ResultSet rs;
+
     /**
      * Creates new form login
      */
@@ -60,19 +61,16 @@ public class login extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt_username, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                            .addComponent(txt_password)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jButton1)))
+                .addGap(55, 55, 55)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txt_username, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                        .addComponent(txt_password)))
                 .addContainerGap(178, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -99,28 +97,25 @@ public class login extends javax.swing.JFrame {
         String username = txt_username.getText();
         char[] pass = txt_password.getPassword();
         String userpassword = String.valueOf(pass);
-        
-        try{
-        String sqlquery = "Select * FROM Table1 WHERE User_name = ? and User_password = ? ";
-        pst = conn.prepareStatement(sqlquery);
-        pst.setString(1,username);
-        pst.setString(2, userpassword);
+
+        try {
+            String sqlquery = "Select * FROM Table1 WHERE User_name = ? and User_password = ? ";
+            pst = conn.prepareStatement(sqlquery);
+            pst.setString(1, username);
+            pst.setString(2, userpassword);
             rs = pst.executeQuery();
-            
-            if(!rs.next())
-            {
-            JOptionPane.showMessageDialog(null,"incorrect input either username or password");
-            
+
+            if (!rs.next()) {
+                JOptionPane.showMessageDialog(null, "incorrect input either username or password");
+
+            } else {
+                JOptionPane.showMessageDialog(null, "login successfull");
             }
-            else
-            {
-            JOptionPane.showMessageDialog(null,"login successfull");
-            }
-        }catch(SQLException e){
-            
+        } catch (SQLException e) {
+
             JOptionPane.showMessageDialog(null, e);
         }
-                         
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
