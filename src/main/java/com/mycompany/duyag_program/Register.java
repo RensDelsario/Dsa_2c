@@ -39,9 +39,9 @@ public class Register extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txt_user = new javax.swing.JTextField();
-        txt_pass = new javax.swing.JTextField();
+        txt_username = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        txt_pass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -54,14 +54,7 @@ public class Register extends javax.swing.JFrame {
 
         jLabel3.setText("Password");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 105, -1, -1));
-        getContentPane().add(txt_user, new org.netbeans.lib.awtextra.AbsoluteConstraints(153, 74, 90, -1));
-
-        txt_pass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_passActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txt_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(153, 102, 90, -1));
+        getContentPane().add(txt_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(153, 74, 110, 20));
 
         jButton1.setText("Register");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -69,21 +62,16 @@ public class Register extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, -1, -1));
+        getContentPane().add(txt_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 110, 20));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passActionPerformed
-        // TODO add your handling code here:
-        
-        
-    }//GEN-LAST:event_txt_passActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
        String username = txt_username.getText().trim();
-    String userpassword = String.valueOf(txt_password.getPassword());
+       String userpassword = String.valueOf(txt_pass.getPassword());
 
     if (username.isEmpty() || userpassword.isEmpty()) {
 
@@ -97,7 +85,7 @@ public class Register extends javax.swing.JFrame {
 
         // Check if username already exists
         String checkQuery =
-                "SELECT * FROM Table1 WHERE user_name = ?";
+                "SELECT * FROM Table1 WHERE User_name = ?";
 
         pst = conn.prepareStatement(checkQuery);
 
@@ -115,7 +103,7 @@ public class Register extends javax.swing.JFrame {
 
         // Insert new account
         String insertQuery =
-                "INSERT INTO Table1 (user_name, user_password) VALUES (?, ?)";
+                "INSERT INTO Table1 (User_name, User_password) VALUES (?, ?)";
 
         pst = conn.prepareStatement(insertQuery);
 
@@ -128,10 +116,10 @@ public class Register extends javax.swing.JFrame {
                 "Registration successful!");
 
         txt_username.setText("");
-        txt_password.setText("");
+        txt_pass.setText("");
 
         // Open login form
-        NewJFrame login = new NewJFrame();
+        login login = new login();
         login.setVisible(true);
 
         // Close register form
@@ -184,7 +172,7 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField txt_pass;
-    private javax.swing.JTextField txt_user;
+    private javax.swing.JPasswordField txt_pass;
+    private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
 }
