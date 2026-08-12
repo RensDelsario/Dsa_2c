@@ -27,7 +27,8 @@ public class NewClass1 {
             System.out.println("p2 win");
         } else if (p1 == 1 && p2 == 3) {
             System.out.println("p2 win");
-        } else if (p1 == 2 && p2 == 1) {
+        }
+        else if (p1 == 2 && p2 == 1) {
             System.out.println("p1 win");
         } else if (p1 == 2 && p2 == 2) {
             System.out.println("draw");
