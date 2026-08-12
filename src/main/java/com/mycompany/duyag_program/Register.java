@@ -4,6 +4,10 @@
  */
 package com.mycompany.duyag_program;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -11,12 +15,16 @@ import javax.swing.JOptionPane;
  * @author CL2-PC
  */
 public class Register extends javax.swing.JFrame {
+     Connection conn;
+        PreparedStatement pst;
+        ResultSet rs;  
 
     /**
      * Creates new form Register
      */
     public Register() {
         initComponents();
+        conn = MsConnectAccess.conn();
     }
 
     /**
@@ -74,45 +82,65 @@ public class Register extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Register register = new Register();
-        register.setVisible(true);
+       String username = txt_username.getText().trim();
+    String userpassword = String.valueOf(txt_password.getPassword());
 
-        this.dispose();
-    
-        String username = txt_user.getText();
-        String password = String.valueOf(txt_pass.getText());
-        String confirmPassword = String.valueOf(txt_confirm.getPassword());
+    if (username.isEmpty() || userpassword.isEmpty()) {
 
-    if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-        JOptionPane.showConfirmDialog(this, "Please fill in all fields.");
-        return;
-    }
+        JOptionPane.showMessageDialog(this,
+                "Please enter username and password.");
 
-    if (!password.equals(confirmPassword)) {
-        JOptionPane.showMessageDialog(this, "Passwords do not match.");
         return;
     }
 
     try {
-        String sql = "INSERT INTO Table1 (User_name, User_password) VALUES (?, ?)";
 
-        pst = conn.prepareStatement(sql);
+        // Check if username already exists
+        String checkQuery =
+                "SELECT * FROM Table1 WHERE user_name = ?";
+
+        pst = conn.prepareStatement(checkQuery);
+
         pst.setString(1, username);
-        pst.setString(2, password);
+
+        rs = pst.executeQuery();
+
+        if (rs.next()) {
+
+            JOptionPane.showMessageDialog(this,
+                    "Username already exists!");
+
+            return;
+        }
+
+        // Insert new account
+        String insertQuery =
+                "INSERT INTO Table1 (user_name, user_password) VALUES (?, ?)";
+
+        pst = conn.prepareStatement(insertQuery);
+
+        pst.setString(1, username);
+        pst.setString(2, userpassword);
 
         pst.executeUpdate();
 
-        JOptionPane.showMessageDialog(this, "Registration successful!");
+        JOptionPane.showMessageDialog(this,
+                "Registration successful!");
 
-        // Open Login JFrame
-        Login login = new Login();
+        txt_username.setText("");
+        txt_password.setText("");
+
+        // Open login form
+        NewJFrame login = new NewJFrame();
         login.setVisible(true);
 
-        // Close Register JFrame
+        // Close register form
         this.dispose();
 
     } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, e.getMessage());
+
+        JOptionPane.showMessageDialog(this,
+                "Registration Error: " + e.getMessage());
     }
     }//GEN-LAST:event_jButton1ActionPerformed
 
