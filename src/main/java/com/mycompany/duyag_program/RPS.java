@@ -11,6 +11,8 @@ import javax.swing.JOptionPane;
  * @author CL2-PC
  */
 public class RPS extends javax.swing.JFrame {
+      int ph1 = 5;
+    int ph2 = 5;
 
     /**
      * Creates new form RPS
@@ -39,6 +41,12 @@ public class RPS extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        txt2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt2ActionPerformed(evt);
+            }
+        });
+
         txt1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt1ActionPerformed(evt);
@@ -50,12 +58,17 @@ public class RPS extends javax.swing.JFrame {
         jLabel2.setText("player 2");
 
         jButton1.setText("VS");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jLabel3.setText("player 2");
+        jLabel3.setText("1: Paper");
 
-        jLabel4.setText("player 2");
+        jLabel4.setText("2: Rock");
 
-        jLabel5.setText("player 2");
+        jLabel5.setText("3: Sccisor");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -63,60 +76,51 @@ public class RPS extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(109, 109, 109)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(153, 153, 153))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
-                                    .addComponent(txt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5))))
-                        .addGap(153, 153, 153))))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(183, Short.MAX_VALUE)
-                    .addComponent(txt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(153, 153, 153)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(182, Short.MAX_VALUE)
-                    .addComponent(jLabel4)
-                    .addGap(177, 177, 177)))
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel4))
+                                .addGap(172, 172, 172))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(txt2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(txt1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel3)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addGap(13, 13, 13)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(txt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(txt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(129, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(84, 84, 84)
-                    .addComponent(txt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(194, Short.MAX_VALUE)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(25, 25, 25)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(244, Short.MAX_VALUE)))
+                .addContainerGap(114, Short.MAX_VALUE))
         );
 
         pack();
@@ -124,43 +128,152 @@ public class RPS extends javax.swing.JFrame {
 
     private void txt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt1ActionPerformed
         // TODO add your handling code here:
-        int p1 = Integer.parseInt(txt1.getText());
-        int p2 = Integer.parseInt(txt2.getText());
-        
-        if (p1 == 1 && p2 == 1){
-            JOptionPane.showConfirmDialog(rootPane, "Draw", "RPS", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else if (p1 == 1 && p2 == 2){
-            JOptionPane.showConfirmDialog(rootPane, "p2 win", "RPS", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else if (p1 == 1 && p2 == 3){
-            JOptionPane.showConfirmDialog(rootPane, "p2 win", "RPS", JOptionPane.INFORMATION_MESSAGE);
-        }
-        
-        else if (p1 == 2 && p2 == 1){
-            JOptionPane.showConfirmDialog(rootPane, "p1 win", "RPS", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else if (p1 == 2 && p2 == 2){
-            JOptionPane.showConfirmDialog(rootPane, "Draw", "RPS", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else if (p1 == 2 && p2 == 3){
-            JOptionPane.showConfirmDialog(rootPane, "p1 2in", "RPS", JOptionPane.INFORMATION_MESSAGE);
-        }
-        
-        else if (p1 == 3 && p2 == 1){
-            JOptionPane.showConfirmDialog(rootPane, "p1 win", "RPS", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else if (p1 == 3 && p2 == 2){
-            JOptionPane.showConfirmDialog(rootPane, "p2 win", "RPS", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else if (p1 == 3 && p2 == 3){
-            JOptionPane.showConfirmDialog(rootPane, "Draw", "RPS", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else{
-            System.out.println("Invalid Input");
-        }
+       
         
     }//GEN-LAST:event_txt1ActionPerformed
+
+    private void txt2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:                                      
+    int p1 = Integer.parseInt(txt1.getText());
+    int p2 = Integer.parseInt(txt2.getText());
+
+
+
+    // Check if game is already over
+    if (ph1 <= 0 || ph2 <= 0) {
+        return;
+    }
+
+    // Draw
+    if (p1 == p2) {
+        JOptionPane.showMessageDialog(rootPane,
+                "DRAW!\n\nPlayer 1 Health: " + ph1 +
+                "\nPlayer 2 Health: " + ph2,
+                "RPS",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    // Paper vs Rock - Player 1 wins
+    else if (p1 == 1 && p2 == 2) {
+        ph2--;
+
+        if (ph2 == 0) {
+            JOptionPane.showMessageDialog(rootPane,
+                    "PLAYER 1 WINS THE GAME!",
+                    "GAME OVER",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(rootPane,
+                    "Player 1 wins!\n\nPlayer 1 Health: " + ph1 +
+                    "\nPlayer 2 Health: " + ph2,
+                    "RPS",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    // Paper vs Scissor - Player 2 wins
+    else if (p1 == 1 && p2 == 3) {
+        ph1--;
+
+        if (ph1 == 0) {
+            JOptionPane.showMessageDialog(rootPane,
+                    "PLAYER 2 WINS THE GAME!",
+                    "GAME OVER",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(rootPane,
+                    "Player 2 wins!\n\nPlayer 1 Health: " + ph1 +
+                    "\nPlayer 2 Health: " + ph2,
+                    "RPS",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    // Rock vs Paper - Player 2 wins
+    else if (p1 == 2 && p2 == 1) {
+        ph1--;
+
+        if (ph1 == 0) {
+            JOptionPane.showMessageDialog(rootPane,
+                    "PLAYER 2 WINS THE GAME!",
+                    "GAME OVER",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(rootPane,
+                    "Player 2 wins!\n\nPlayer 1 Health: " + ph1 +
+                    "\nPlayer 2 Health: " + ph2,
+                    "RPS",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    // Rock vs Scissor - Player 1 wins
+    else if (p1 == 2 && p2 == 3) {
+        ph2--;
+
+        if (ph2 == 0) {
+            JOptionPane.showMessageDialog(rootPane,
+                    "PLAYER 1 WINS THE GAME!",
+                    "GAME OVER",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(rootPane,
+                    "Player 1 wins!\n\nPlayer 1 Health: " + ph1 +
+                    "\nPlayer 2 Health: " + ph2,
+                    "RPS",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    // Scissor vs Paper - Player 1 wins
+    else if (p1 == 3 && p2 == 1) {
+        ph2--;
+
+        if (ph2 == 0) {
+            JOptionPane.showMessageDialog(rootPane,
+                    "PLAYER 1 WINS THE GAME!",
+                    "GAME OVER",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(rootPane,
+                    "Player 1 wins!\n\nPlayer 1 Health: " + ph1 +
+                    "\nPlayer 2 Health: " + ph2,
+                    "RPS",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    // Scissor vs Rock - Player 2 wins
+    else if (p1 == 3 && p2 == 2) {
+        ph1--;
+
+        if (ph1 == 0) {
+            JOptionPane.showMessageDialog(rootPane,
+                    "PLAYER 2 WINS THE GAME!",
+                    "GAME OVER",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(rootPane,
+                    "Player 2 wins!\n\nPlayer 1 Health: " + ph1 +
+                    "\nPlayer 2 Health: " + ph2,
+                    "RPS",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    // Invalid input
+    else {
+        JOptionPane.showMessageDialog(rootPane,
+                "Invalid Input!\nPlease enter 1, 2, or 3.",
+                "RPS",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
