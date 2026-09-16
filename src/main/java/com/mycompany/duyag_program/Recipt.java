@@ -45,12 +45,8 @@ public class Recipt extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        btnSnacks = new javax.swing.JButton();
-        btnDrinks = new javax.swing.JButton();
         lblSelectedCategory = new javax.swing.JLabel();
         lblSelectedProduct = new javax.swing.JLabel();
-        btnPiatos = new javax.swing.JButton();
-        btnNova = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         lblPrice = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -61,41 +57,22 @@ public class Recipt extends javax.swing.JFrame {
         lblSubtotal = new javax.swing.JLabel();
         lblChange = new javax.swing.JLabel();
         btnAgain = new javax.swing.JButton();
+        btnSnacks = new javax.swing.JButton();
+        btnDrinks = new javax.swing.JButton();
+        btnPiatos = new javax.swing.JButton();
+        btnNova = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Canteen");
         jLabel1.setIconTextGap(5);
 
         jLabel2.setText("Choose Shack or Drinks");
 
-        btnSnacks.setText("1:Snacks");
-        btnSnacks.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSnacksActionPerformed(evt);
-            }
-        });
-
-        btnDrinks.setText("2:Drinks");
-        btnDrinks.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDrinksActionPerformed(evt);
-            }
-        });
-
         lblSelectedCategory.setText("Selected Product None");
 
         lblSelectedProduct.setText("Product: ");
-
-        btnPiatos.setText("1: Piatos - 22");
-        btnPiatos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPiatosActionPerformed(evt);
-            }
-        });
-
-        btnNova.setText("2: Nova - 25");
 
         jLabel5.setText("Selected Product None");
 
@@ -123,6 +100,34 @@ public class Recipt extends javax.swing.JFrame {
             }
         });
 
+        btnSnacks.setText("1:Snacks");
+        btnSnacks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSnacksActionPerformed(evt);
+            }
+        });
+
+        btnDrinks.setText("2:Drinks");
+        btnDrinks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDrinksActionPerformed(evt);
+            }
+        });
+
+        btnPiatos.setText("1:Piatos - 22");
+        btnPiatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPiatosActionPerformed(evt);
+            }
+        });
+
+        btnNova.setText("2:Nova - 25");
+        btnNova.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -139,47 +144,51 @@ public class Recipt extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnSnacks, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(45, 45, 45)
-                                .addComponent(btnDrinks, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(87, 87, 87)
-                                .addComponent(lblSelectedProduct))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGap(33, 33, 33)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblSubtotal)
-                                            .addComponent(jLabel7))))
-                                .addGap(58, 58, 58)
-                                .addComponent(lblChange))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(btnPiatos)
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(btnNova)
-                            .addComponent(txtCash, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(71, 71, 71)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblSelectedCategory)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel2)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(89, 89, 89)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnAgain)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(14, 14, 14)
-                                .addComponent(btnOrder)))))
-                .addContainerGap(39, Short.MAX_VALUE))
+                                .addComponent(btnOrder))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(117, 117, 117)
+                        .addComponent(lblSelectedProduct))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnNova)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGap(63, 63, 63)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblSubtotal)
+                                        .addComponent(jLabel7)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnSnacks)
+                                    .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnPiatos)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(58, 58, 58)
+                                    .addComponent(lblChange))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(49, 49, 49)
+                                    .addComponent(btnDrinks))))))
+                .addContainerGap(67, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(168, 168, 168)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
+                    .addComponent(txtCash, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,19 +199,19 @@ public class Recipt extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
                 .addComponent(lblSelectedCategory)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSnacks)
                     .addComponent(btnDrinks))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lblSelectedProduct)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPiatos)
                     .addComponent(btnNova))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(22, 22, 22)
                 .addComponent(lblPrice)
                 .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -225,34 +234,6 @@ public class Recipt extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnDrinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDrinksActionPerformed
-        // TODO add your handling code here:
-        lblSelectedCategory.setText("Selected Category: Drinks");
-
-    JOptionPane.showMessageDialog(
-        this,
-        "Drinks selected.\nDrinks are not available yet."
-    );      // TODO add your handling code here:
-    }//GEN-LAST:event_btnDrinksActionPerformed
-
-    private void btnPiatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPiatosActionPerformed
-        // TODO add your handling code here:
-        selectedProduct = "Piatos";
-    price = 22;
-
-    lblSelectedProduct.setText("Selected Product: Piatos");
-    lblPrice.setText("Price: ₱22");       // TODO add your handling code here:
-    }//GEN-LAST:event_btnPiatosActionPerformed
-
-    private void btnNovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaActionPerformed
-  selectedProduct = "Nova";
-    price = 25;
-
-    lblSelectedProduct.setText("Selected Product: Nova");
-    lblPrice.setText("Price: ₱25");        // TODO add your handling code here:
-    //GEN-LAST:event_btnNovaActionPerformed
-    }//GEN-LAST:event_btnPiatosActionPerformed
 
     private void btnAgainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgainActionPerformed
         // TODO add your handling code here:
@@ -385,21 +366,48 @@ public class Recipt extends javax.swing.JFrame {
         // TODO add your handling code here:
         lblSelectedCategory.setText("Selected Category: Snacks");
 
-        // Enable snack products
-        btnPiatos.setEnabled(true);
-        btnNova.setEnabled(true);
+    // Enable snack products
+    btnPiatos.setEnabled(true);
+    btnNova.setEnabled(true);
 
-        // Reset product
-        selectedProduct = "";
-        price = 0;
+    // Reset product
+    selectedProduct = "";
+    price = 0;
 
-        lblSelectedProduct.setText("Selected Product: None");
-        lblPrice.setText("Price: ₱0");      // TODO add your handling code here:
-
-        
+    lblSelectedProduct.setText("Selected Product: None");
+    lblPrice.setText("Price: ₱0");   
     }//GEN-LAST:event_btnSnacksActionPerformed
 
-    /**
+    private void btnDrinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDrinksActionPerformed
+        // TODO add your handling code here:
+        lblSelectedCategory.setText("Selected Category: Drinks");
+
+        JOptionPane.showMessageDialog(
+        this,
+        "Drinks selected.\nDrinks are not available yet."
+    );     
+    }//GEN-LAST:event_btnDrinksActionPerformed
+
+    private void btnPiatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPiatosActionPerformed
+        // TODO add your handling code here:
+        selectedProduct = "Piatos";
+        price = 22;
+
+        lblSelectedProduct.setText("Selected Product: Piatos");
+        lblPrice.setText("Price: ₱22");       // TODO add your handling code here:
+    
+    }//GEN-LAST:event_btnPiatosActionPerformed
+
+    private void btnNovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaActionPerformed
+        // TODO add your handling code here:
+        selectedProduct = "Nova";
+    price = 25;
+
+    lblSelectedProduct.setText("Selected Product: Nova");
+    lblPrice.setText("Price: ₱25");
+    }//GEN-LAST:event_btnNovaActionPerformed
+
+/**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -471,4 +479,10 @@ public class Recipt extends javax.swing.JFrame {
     private javax.swing.JTextField txtCash;
     private javax.swing.JTextField txtQuantity;
     // End of variables declaration//GEN-END:variables
+
+    private static class receipt {
+
+        public receipt() {
+        }
+    }
 }
