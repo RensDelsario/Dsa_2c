@@ -3,18 +3,35 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.duyag_program;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author CL2-PC
  */
 public class Recipt extends javax.swing.JFrame {
+    private String selectedProduct = "";
+    private int price = 0;
 
     /**
      * Creates new form Recipt
+     * 
      */
     public Recipt() {
         initComponents();
+        // Initial values
+    lblSelectedCategory.setText("Selected Category: None");
+    lblSelectedProduct.setText("Selected Product: None");
+    lblPrice.setText("Price: ₱0");
+    lblSubtotal.setText("Subtotal: ₱0");
+    lblChange.setText("Change: ₱0");
+
+    txtQuantity.setText("0");
+    txtCash.setText("0");
+
+    // Products are not available until Snacks is selected
+    btnPiatos.setEnabled(false);
+    btnNova.setEnabled(false);
     }
 
     /**
@@ -28,22 +45,22 @@ public class Recipt extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnSnacks = new javax.swing.JButton();
+        btnDrinks = new javax.swing.JButton();
+        lblSelectedCategory = new javax.swing.JLabel();
+        lblSelectedProduct = new javax.swing.JLabel();
+        btnPiatos = new javax.swing.JButton();
+        btnNova = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        lblPrice = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
+        btnOrder = new javax.swing.JButton();
+        txtQuantity = new javax.swing.JTextField();
+        txtCash = new javax.swing.JTextField();
+        lblSubtotal = new javax.swing.JLabel();
+        lblChange = new javax.swing.JLabel();
+        btnAgain = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,46 +70,56 @@ public class Recipt extends javax.swing.JFrame {
 
         jLabel2.setText("Choose Shack or Drinks");
 
-        jButton1.setText("1:Snacks");
-
-        jButton2.setText("2:Drinks");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnSnacks.setText("1:Snacks");
+        btnSnacks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnSnacksActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("Selected Product None");
-
-        jLabel4.setText("Product: ");
-
-        jButton3.setText("1: Piatos - 22");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnDrinks.setText("2:Drinks");
+        btnDrinks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnDrinksActionPerformed(evt);
             }
         });
 
-        jButton4.setText("2: Nova - 25");
+        lblSelectedCategory.setText("Selected Product None");
+
+        lblSelectedProduct.setText("Product: ");
+
+        btnPiatos.setText("1: Piatos - 22");
+        btnPiatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPiatosActionPerformed(evt);
+            }
+        });
+
+        btnNova.setText("2: Nova - 25");
 
         jLabel5.setText("Selected Product None");
 
-        jLabel6.setText("Price: ");
+        lblPrice.setText("Price: ");
 
         jLabel7.setText("Quantity:");
 
         jLabel8.setText("Cash:");
 
-        jButton5.setText("Order");
-
-        jLabel9.setText("Total: ");
-
-        jLabel10.setText("Changes:");
-
-        jButton6.setText("Order Again!?");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnOrder.setText("Order");
+        btnOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnOrderActionPerformed(evt);
+            }
+        });
+
+        lblSubtotal.setText("Total: ");
+
+        lblChange.setText("Changes:");
+
+        btnAgain.setText("Order Again!?");
+        btnAgain.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgainActionPerformed(evt);
             }
         });
 
@@ -107,7 +134,7 @@ public class Recipt extends javax.swing.JFrame {
                         .addComponent(jLabel5))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(117, 117, 117)
-                        .addComponent(jLabel6)))
+                        .addComponent(lblPrice)))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,39 +142,44 @@ public class Recipt extends javax.swing.JFrame {
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel9)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel7))
-                                    .addComponent(jButton3))
-                                .addGap(43, 43, 43)
-                                .addComponent(jLabel10))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addGap(61, 61, 61)
-                                .addComponent(jButton2))
+                                .addComponent(btnSnacks, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(45, 45, 45)
+                                .addComponent(btnDrinks, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(87, 87, 87)
-                                .addComponent(jLabel4))))
+                                .addComponent(lblSelectedProduct))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(33, 33, 33)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblSubtotal)
+                                            .addComponent(jLabel7))))
+                                .addGap(58, 58, 58)
+                                .addComponent(lblChange))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(168, 168, 168)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnPiatos)
+                        .addGap(41, 41, 41)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4)))
+                            .addComponent(btnNova)
+                            .addComponent(txtCash, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(71, 71, 71)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
+                            .addComponent(lblSelectedCategory)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(89, 89, 89)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton6)
-                            .addComponent(jButton5))))
-                .addContainerGap(92, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAgain)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(btnOrder)))))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,62 +187,240 @@ public class Recipt extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
-                .addComponent(jLabel3)
+                .addComponent(lblSelectedCategory)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnSnacks)
+                    .addComponent(btnDrinks))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
+                .addComponent(lblSelectedProduct)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnPiatos)
+                    .addComponent(btnNova))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6)
+                .addComponent(lblPrice)
                 .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCash, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
-                .addComponent(jButton5)
+                .addComponent(btnOrder)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10))
+                    .addComponent(lblSubtotal)
+                    .addComponent(lblChange))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton6)
+                .addComponent(btnAgain)
                 .addGap(22, 22, 22))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnDrinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDrinksActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        lblSelectedCategory.setText("Selected Category: Drinks");
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    JOptionPane.showMessageDialog(
+        this,
+        "Drinks selected.\nDrinks are not available yet."
+    );      // TODO add your handling code here:
+    }//GEN-LAST:event_btnDrinksActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btnPiatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPiatosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+        selectedProduct = "Piatos";
+    price = 22;
+
+    lblSelectedProduct.setText("Selected Product: Piatos");
+    lblPrice.setText("Price: ₱22");       // TODO add your handling code here:
+    }//GEN-LAST:event_btnPiatosActionPerformed
+
+    private void btnNovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaActionPerformed
+  selectedProduct = "Nova";
+    price = 25;
+
+    lblSelectedProduct.setText("Selected Product: Nova");
+    lblPrice.setText("Price: ₱25");        // TODO add your handling code here:
+    //GEN-LAST:event_btnNovaActionPerformed
+    }//GEN-LAST:event_btnPiatosActionPerformed
+
+    private void btnAgainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgainActionPerformed
+        // TODO add your handling code here:
+         act();
+    }//GEN-LAST:event_btnAgainActionPerformed
+
+   private void act() {
+
+    int answer = JOptionPane.showConfirmDialog(
+        this,
+        "Do you want to order again?",
+        "Order Again",
+        JOptionPane.YES_NO_OPTION
+    );
+
+    if (answer == JOptionPane.YES_OPTION) {
+
+        // Reset order
+        selectedProduct = "";
+        price = 0;
+
+        lblSelectedCategory.setText("Selected Category: None");
+        lblSelectedProduct.setText("Selected Product: None");
+        lblPrice.setText("Price: ₱0");
+        lblSubtotal.setText("Subtotal: ₱0");
+        lblChange.setText("Change: ₱0");
+
+        txtQuantity.setText("0");
+        txtCash.setText("0");
+
+        btnPiatos.setEnabled(false);
+        btnNova.setEnabled(false);
+
+      
+        return;
+
+    } else {
+
+        JOptionPane.showMessageDialog(
+            this,
+            "Thank you for ordering!"
+        );
+    }
+    }//GEN-LAST:event_btnAgainActionPerformed
+
+    private void btnOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderActionPerformed
+        // TODO add your handling code here:
+        try {
+
+ 
+        if (selectedProduct.equals("")) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Please select a product first."
+            );
+            return;
+        }
+
+    
+        int quantity = Integer.parseInt(txtQuantity.getText());
+
+        if (quantity <= 0) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Quantity must be greater than 0."
+            );
+            return;
+        }
+
+    
+        int subtotal = quantity * price;
+
+        lblSubtotal.setText("Subtotal: ₱" + subtotal);
+
+     
+        int cash = Integer.parseInt(txtCash.getText());
+
+  
+        while (cash < subtotal) {
+
+            JOptionPane.showMessageDialog(
+                this,
+                "Insufficient cash!\n"
+                + "Subtotal: ₱" + subtotal
+            );
+
+            String newCash = JOptionPane.showInputDialog(
+                this,
+                "Enter enough cash:"
+            );
+
+            if (newCash == null) {
+                return;
+            }
+
+            cash = Integer.parseInt(newCash);
+            txtCash.setText(String.valueOf(cash));
+        }
+
+    
+        int change = cash - subtotal;
+
+        lblChange.setText("Change: ₱" + change);
+
+      
+        JOptionPane.showMessageDialog(
+            this,
+            "ORDER RECEIPT\n\n"
+            + "Category: "
+            + lblSelectedCategory.getText()
+                .replace("Selected Category: ", "")
+            + "\nProduct: " + selectedProduct
+            + "\nPrice: ₱" + price
+            + "\nQuantity: " + quantity
+            + "\nSubtotal: ₱" + subtotal
+            + "\nCash: ₱" + cash
+            + "\nChange: ₱" + change
+        );
+
+    } catch (NumberFormatException e) {
+
+        JOptionPane.showMessageDialog(
+            this,
+            "Please enter valid numbers."
+        );
+    }
+    }//GEN-LAST:event_btnOrderActionPerformed
+
+    private void btnSnacksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSnacksActionPerformed
+        // TODO add your handling code here:
+        lblSelectedCategory.setText("Selected Category: Snacks");
+
+        // Enable snack products
+        btnPiatos.setEnabled(true);
+        btnNova.setEnabled(true);
+
+        // Reset product
+        selectedProduct = "";
+        price = 0;
+
+        lblSelectedProduct.setText("Selected Product: None");
+        lblPrice.setText("Price: ₱0");      // TODO add your handling code here:
+
+        
+    }//GEN-LAST:event_btnSnacksActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(receipt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(receipt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(receipt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(receipt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -242,23 +452,23 @@ public class Recipt extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton btnAgain;
+    private javax.swing.JButton btnDrinks;
+    private javax.swing.JButton btnNova;
+    private javax.swing.JButton btnOrder;
+    private javax.swing.JButton btnPiatos;
+    private javax.swing.JButton btnSnacks;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel lblChange;
+    private javax.swing.JLabel lblPrice;
+    private javax.swing.JLabel lblSelectedCategory;
+    private javax.swing.JLabel lblSelectedProduct;
+    private javax.swing.JLabel lblSubtotal;
+    private javax.swing.JTextField txtCash;
+    private javax.swing.JTextField txtQuantity;
     // End of variables declaration//GEN-END:variables
 }
