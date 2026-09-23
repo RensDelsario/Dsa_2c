@@ -9,22 +9,26 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author CL2-PC
  */
 public class Register extends javax.swing.JFrame {
-     Connection conn;
+        Connection conn;
         PreparedStatement pst;
-        ResultSet rs;  
-
+        ResultSet rs;
+        DefaultTableModel model;
+        
+        private String selectedUsername = null;
     /**
      * Creates new form Register
      */
     public Register() {
         initComponents();
         conn = MsConnectAccess.conn();
+        loadAccounts();
     }
 
     /**
@@ -42,6 +46,11 @@ public class Register extends javax.swing.JFrame {
         txt_username = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         txt_pass = new javax.swing.JPasswordField();
+        btnUpdate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -65,6 +74,30 @@ public class Register extends javax.swing.JFrame {
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, -1, -1));
         getContentPane().add(txt_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 110, 20));
 
+        btnUpdate.setText("jButton2");
+        getContentPane().add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, -1, -1));
+
+        btnDelete.setText("jButton3");
+        getContentPane().add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, -1, -1));
+
+        btnRefresh.setText("jButton4");
+        getContentPane().add(btnRefresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 210, -1, -1));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -82,54 +115,128 @@ public class Register extends javax.swing.JFrame {
     }
 
     try {
-
-        // Check if username already exists
-        String checkQuery =
-                "SELECT * FROM Table1 WHERE User_name = ?";
-
+        String checkQuery = "SELECT * FROM Table1 WHERE User_name = ?";
         pst = conn.prepareStatement(checkQuery);
-
         pst.setString(1, username);
-
         rs = pst.executeQuery();
-
+ 
         if (rs.next()) {
-
-            JOptionPane.showMessageDialog(this,
-                    "Username already exists!");
-
+            JOptionPane.showMessageDialog(this, "Username already exists!");
             return;
         }
-
-        // Insert new account
-        String insertQuery =
-                "INSERT INTO Table1 (User_name, User_password) VALUES (?, ?)";
-
+ 
+        String insertQuery = "INSERT INTO Table1 (User_name, User_password) VALUES (?, ?)";
         pst = conn.prepareStatement(insertQuery);
-
         pst.setString(1, username);
         pst.setString(2, userpassword);
-
         pst.executeUpdate();
-
-        JOptionPane.showMessageDialog(this,
-                "Registration successful!");
-
+ 
+        JOptionPane.showMessageDialog(this, "Registration successful!");
+ 
+        clearFields();
+        loadAccounts();
+ 
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Registration Error: " + e.getMessage());
+    }
+    }                                        
+ 
+    // ---------------- READ ----------------
+    private void loadAccounts() {
+        model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        String sql = "SELECT User_name, User_password FROM Table1 ORDER BY User_name";
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getString("User_name"),
+                    rs.getString("User_password")
+                });
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error loading accounts: " + e.getMessage());
+        }
+    }
+ 
+    private void jTable1RowSelected() {
+        int row = jTable1.getSelectedRow();
+        if (row >= 0) {
+            selectedUsername = model.getValueAt(row, 0).toString();
+            txt_username.setText(selectedUsername);
+            txt_pass.setText(model.getValueAt(row, 1).toString());
+        }
+    }
+ 
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {
+        clearFields();
+        loadAccounts();
+    }
+ 
+    // ---------------- UPDATE ----------------
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {
+        if (selectedUsername == null) {
+            JOptionPane.showMessageDialog(this, "Select a row in the table first.");
+            return;
+        }
+        String newUsername = txt_username.getText().trim();
+        String newPassword = String.valueOf(txt_pass.getPassword());
+ 
+        if (newUsername.isEmpty() || newPassword.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter username and password.");
+            return;
+        }
+ 
+        try {
+            String updateQuery =
+                "UPDATE Table1 SET User_name = ?, User_password = ? WHERE User_name = ?";
+            pst = conn.prepareStatement(updateQuery);
+            pst.setString(1, newUsername);
+            pst.setString(2, newPassword);
+            pst.setString(3, selectedUsername);
+            pst.executeUpdate();
+ 
+            JOptionPane.showMessageDialog(this, "Account updated.");
+            clearFields();
+            loadAccounts();
+ 
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Update Error: " + e.getMessage());
+        }
+    }
+ 
+    // ---------------- DELETE ----------------
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {
+        if (selectedUsername == null) {
+            JOptionPane.showMessageDialog(this, "Select a row in the table first.");
+            return;
+        }
+        int confirm = JOptionPane.showConfirmDialog(this,
+            "Delete account \"" + selectedUsername + "\"?", "Confirm", JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_OPTION) return;
+ 
+        try {
+            String deleteQuery = "DELETE FROM Table1 WHERE User_name = ?";
+            pst = conn.prepareStatement(deleteQuery);
+            pst.setString(1, selectedUsername);
+            pst.executeUpdate();
+ 
+            JOptionPane.showMessageDialog(this, "Account deleted.");
+            clearFields();
+            loadAccounts();
+ 
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Delete Error: " + e.getMessage());
+        }
+    }
+ 
+    private void clearFields() {
         txt_username.setText("");
         txt_pass.setText("");
-
-        // Open login form
-        login login = new login();
-        login.setVisible(true);
-
-        // Close register form
-        this.dispose();
-
-    } catch (SQLException e) {
-
-        JOptionPane.showMessageDialog(this,
-                "Registration Error: " + e.getMessage());
-    }
+        selectedUsername = null;
+        jTable1.clearSelection();
+    
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -137,6 +244,22 @@ public class Register extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -168,10 +291,15 @@ public class Register extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnRefresh;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JPasswordField txt_pass;
     private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
