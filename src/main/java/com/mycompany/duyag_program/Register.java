@@ -74,13 +74,13 @@ public class Register extends javax.swing.JFrame {
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, -1, -1));
         getContentPane().add(txt_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 110, 20));
 
-        btnUpdate.setText("jButton2");
+        btnUpdate.setText("Update");
         getContentPane().add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, -1, -1));
 
-        btnDelete.setText("jButton3");
+        btnDelete.setText("Delete");
         getContentPane().add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, -1, -1));
 
-        btnRefresh.setText("jButton4");
+        btnRefresh.setText("Refresh");
         getContentPane().add(btnRefresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 210, -1, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
