@@ -26,10 +26,27 @@ public class Register extends javax.swing.JFrame {
      * Creates new form Register
      */
     public Register() {
-        initComponents();
-        conn = MsConnectAccess.conn();
+    initComponents();
+
+    conn = MsConnectAccess.conn();
+
+    if (conn != null) {
         loadAccounts();
+
+        jTable1.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                jTable1RowSelected();
+            }
+        });
+    } else {
+        JOptionPane.showMessageDialog(
+            this,
+            "Unable to connect to database.",
+            "Database Error",
+            JOptionPane.ERROR_MESSAGE
+        );
     }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -143,30 +160,35 @@ public class Register extends javax.swing.JFrame {
  
     // ---------------- READ ----------------
     private void loadAccounts() {
-        model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-        String sql = "SELECT User_name, User_password FROM Table1 ORDER BY User_name";
-        try {
-            pst = conn.prepareStatement(sql);
-            rs = pst.executeQuery();
-            while (rs.next()) {
-                model.addRow(new Object[]{
-                    rs.getString("User_name"),
-                    rs.getString("User_password")
-                });
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error loading accounts: " + e.getMessage());
+    model = (DefaultTableModel) jTable1.getModel();
+    model.setRowCount(0);
+
+    String sql = "SELECT User_name, User_password FROM Table1 ORDER BY User_name";
+
+    try (PreparedStatement pst = conn.prepareStatement(sql);
+         ResultSet rs = pst.executeQuery()) {
+
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getString("User_name"),
+                rs.getString("User_password")
+            });
         }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Error loading accounts: " + e.getMessage()
+        );
     }
+}
  
     private void jTable1RowSelected() {
         int row = jTable1.getSelectedRow();
-        if (row >= 0) {
-            selectedUsername = model.getValueAt(row, 0).toString();
-            txt_username.setText(selectedUsername);
-            txt_pass.setText(model.getValueAt(row, 1).toString());
-        }
+        if (selectedUsername == null) {
+    JOptionPane.showMessageDialog(this, "Select a row in the table first.");
+    return;
+}
     }
  
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,61 +198,113 @@ public class Register extends javax.swing.JFrame {
  
     // ---------------- UPDATE ----------------
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {
-        if (selectedUsername == null) {
-            JOptionPane.showMessageDialog(this, "Select a row in the table first.");
-            return;
-        }
-        String newUsername = txt_username.getText().trim();
-        String newPassword = String.valueOf(txt_pass.getPassword());
- 
-        if (newUsername.isEmpty() || newPassword.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter username and password.");
-            return;
-        }
- 
-        try {
-            String updateQuery =
-                "UPDATE Table1 SET User_name = ?, User_password = ? WHERE User_name = ?";
-            pst = conn.prepareStatement(updateQuery);
-            pst.setString(1, newUsername);
-            pst.setString(2, newPassword);
-            pst.setString(3, selectedUsername);
-            pst.executeUpdate();
- 
-            JOptionPane.showMessageDialog(this, "Account updated.");
+
+    if (selectedUsername == null) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Select a row in the table first."
+        );
+        return;
+    }
+
+    String newUsername = txt_username.getText().trim();
+    String newPassword = String.valueOf(txt_pass.getPassword());
+
+    if (newUsername.isEmpty() || newPassword.isEmpty()) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Please enter username and password."
+        );
+        return;
+    }
+
+    String sql =
+        "UPDATE Table1 SET User_name = ?, User_password = ? " +
+        "WHERE User_name = ?";
+
+    try (PreparedStatement pst = conn.prepareStatement(sql)) {
+
+        pst.setString(1, newUsername);
+        pst.setString(2, newPassword);
+        pst.setString(3, selectedUsername);
+
+        int updated = pst.executeUpdate();
+
+        if (updated > 0) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Account updated successfully!"
+            );
+
             clearFields();
             loadAccounts();
- 
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Update Error: " + e.getMessage());
+        } else {
+            JOptionPane.showMessageDialog(
+                this,
+                "Account not found."
+            );
         }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Update Error: " + e.getMessage()
+        );
     }
- 
+}
     // ---------------- DELETE ----------------
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {
-        if (selectedUsername == null) {
-            JOptionPane.showMessageDialog(this, "Select a row in the table first.");
-            return;
-        }
-        int confirm = JOptionPane.showConfirmDialog(this,
-            "Delete account \"" + selectedUsername + "\"?", "Confirm", JOptionPane.YES_NO_OPTION);
-        if (confirm != JOptionPane.YES_OPTION) return;
- 
-        try {
-            String deleteQuery = "DELETE FROM Table1 WHERE User_name = ?";
-            pst = conn.prepareStatement(deleteQuery);
-            pst.setString(1, selectedUsername);
-            pst.executeUpdate();
- 
-            JOptionPane.showMessageDialog(this, "Account deleted.");
+
+    if (selectedUsername == null) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Select a row in the table first."
+        );
+        return;
+    }
+
+    int confirm = JOptionPane.showConfirmDialog(
+        this,
+        "Delete account \"" + selectedUsername + "\"?",
+        "Confirm Delete",
+        JOptionPane.YES_NO_OPTION
+    );
+
+    if (confirm != JOptionPane.YES_OPTION) {
+        return;
+    }
+
+    String sql = "DELETE FROM Table1 WHERE User_name = ?";
+
+    try (PreparedStatement pst = conn.prepareStatement(sql)) {
+
+        pst.setString(1, selectedUsername);
+
+        int deleted = pst.executeUpdate();
+
+        if (deleted > 0) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Account deleted successfully!"
+            );
+
             clearFields();
             loadAccounts();
- 
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Delete Error: " + e.getMessage());
+        } else {
+            JOptionPane.showMessageDialog(
+                this,
+                "Account not found."
+            );
         }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Delete Error: " + e.getMessage()
+        );
     }
- 
+}
+
     private void clearFields() {
         txt_username.setText("");
         txt_pass.setText("");
