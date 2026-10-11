@@ -16,13 +16,23 @@ import javax.swing.JOptionPane;
 public class MsConnectAccess {
 
     public static Connection conn() {
+
         try {
-            String url = "jdbc:ucanaccess://\"C:\\Users\\CL2-PC\\Documents\\myDBs1rens1.accdb\"";
-            Connection conn = DriverManager.getConnection(url);
-            return conn;
+            String url =
+                "jdbc:ucanaccess://C:\\Users\\CL2-PC\\Documents\\myDBs1rens1.accdb";
+
+            return DriverManager.getConnection(url);
+
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
+
+            JOptionPane.showMessageDialog(
+                null,
+                "Database connection failed:\n" + e.getMessage(),
+                "Database Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+
+            return null;
         }
-        return null;
     }
 }
