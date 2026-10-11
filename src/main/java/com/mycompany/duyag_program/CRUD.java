@@ -20,27 +20,21 @@ public class CRUD extends javax.swing.JFrame {
     ResultSet rs;
 
     public CRUD() {
+    initComponents();
 
-        initComponents();
-        conn = MsConnectAccess.conn();
+    conn = MsConnectAccess.conn();
 
-        if (conn != null) {
-            loadData();
-        }
-
-        // Connect to Microsoft Access
-        conn = MsConnectAccess.conn();
-
-        if (conn == null) {
-
-            JOptionPane.showMessageDialog(
-                this,
-                "Unable to connect to Microsoft Access database.",
-                "Database Error",
-                JOptionPane.ERROR_MESSAGE
-            );
-
-        }
+    if (conn != null) {
+        loadData();
+    } else {
+        JOptionPane.showMessageDialog(
+            this,
+            "Unable to connect to Microsoft Access database.",
+            "Database Error",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
+}
     }
     /**
      * Creates new form CRUD
@@ -61,10 +55,13 @@ public class CRUD extends javax.swing.JFrame {
 
         pst.executeUpdate();
 
-        JOptionPane.showMessageDialog(
-            this,
-            "Record added successfully!"
-        );
+JOptionPane.showMessageDialog(
+    this,
+    "Record added successfully!"
+);
+
+loadData();
+clearFields();
 
     } catch (SQLException e) {
 
@@ -100,18 +97,20 @@ public class CRUD extends javax.swing.JFrame {
 
         if (updated > 0) {
 
-            JOptionPane.showMessageDialog(
-                this,
-                "Record updated successfully!"
-            );
+    JOptionPane.showMessageDialog(
+        this,
+        "Record updated successfully!"
+    );
 
-        } else {
+    loadData();
+    clearFields();
 
-            JOptionPane.showMessageDialog(
-                this,
-                "Record not found."
-            );
-        }
+} else {
+    JOptionPane.showMessageDialog(
+        this,
+        "Record not found."
+    );
+}
 
     } catch (SQLException e) {
 
@@ -157,18 +156,20 @@ public class CRUD extends javax.swing.JFrame {
 
         if (deleted > 0) {
 
-            JOptionPane.showMessageDialog(
-                this,
-                "Record deleted successfully!"
-            );
+    JOptionPane.showMessageDialog(
+        this,
+        "Record deleted successfully!"
+    );
 
-        } else {
+    loadData();
+    clearFields();
 
-            JOptionPane.showMessageDialog(
-                this,
-                "Record not found."
-            );
-        }
+} else {
+    JOptionPane.showMessageDialog(
+        this,
+        "Record not found."
+    );
+}
 
     } catch (SQLException e) {
 
