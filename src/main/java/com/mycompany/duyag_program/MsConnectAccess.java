@@ -19,7 +19,7 @@ public class MsConnectAccess {
 
         try {
             String url =
-                "jdbc:ucanaccess://C:\\Users\\CL2-PC\\Documents\\myDBs1rens1.accdb";
+                "jdbc:ucanaccess://C:\\Users\\CL2-PC\\Documents\\myDBs1rens.accdb";
 
             return DriverManager.getConnection(url);
 

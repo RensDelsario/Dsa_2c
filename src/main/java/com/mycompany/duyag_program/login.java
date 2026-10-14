@@ -95,24 +95,33 @@ public class login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String username = txt_username.getText();
-        char[] pass = txt_password.getPassword();
-        String userpassword = String.valueOf(pass);
+            char[] pass = txt_password.getPassword();
+            String userpassword = String.valueOf(pass);
+            
+            try{
+                String sqluery = "Select * From Table1 WHERE user_name = ? and user_password = ? ";
+                pst = conn.prepareStatement(sqluery);
+                pst.setString(1,username);
+                pst.setString(2, userpassword);
+                    rs = pst.executeQuery();
+                    
+                    if(!rs.next())
+                    {
+                        JOptionPane.showMessageDialog(null,"Incorrect username or password");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this,
+            "Login successful!");
 
-        try {
-            String sqlquery = "Select * FROM Table1 WHERE User_name = ? and User_password = ? ";
-            pst = conn.prepareStatement(sqlquery);
-            pst.setString(1, username);
-            pst.setString(2, userpassword);
-            rs = pst.executeQuery();
+    StudentFrame studentFrame = new StudentFrame();
 
-            if (!rs.next()) {
-                JOptionPane.showMessageDialog(null, "incorrect input either username or password");
+    studentFrame.setVisible(true);
 
-            } else {
-                JOptionPane.showMessageDialog(null, "login successfull");
-            }
-        } catch (SQLException e) {
-
+    this.dispose();
+                        
+                    }
+                 } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
 
@@ -123,6 +132,24 @@ public class login extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
+         try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -151,6 +178,7 @@ public class login extends javax.swing.JFrame {
                 new login().setVisible(true);
             }
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

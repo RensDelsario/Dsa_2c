@@ -62,7 +62,7 @@ public class Register extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txt_username = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        txt_pass = new javax.swing.JPasswordField();
+        txt_password = new javax.swing.JPasswordField();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnRefresh = new javax.swing.JButton();
@@ -89,7 +89,7 @@ public class Register extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, -1, -1));
-        getContentPane().add(txt_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 110, 20));
+        getContentPane().add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 110, 20));
 
         btnUpdate.setText("Update");
         getContentPane().add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, -1, -1));
@@ -121,7 +121,7 @@ public class Register extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
        String username = txt_username.getText().trim();
-       String userpassword = String.valueOf(txt_pass.getPassword());
+    String userpassword = String.valueOf(txt_password.getPassword());
 
     if (username.isEmpty() || userpassword.isEmpty()) {
 
@@ -132,29 +132,53 @@ public class Register extends javax.swing.JFrame {
     }
 
     try {
-        String checkQuery = "SELECT * FROM Table1 WHERE User_name = ?";
+
+        // Check if username already exists
+        String checkQuery =
+                "SELECT * FROM Table1 WHERE user_name = ?";
+
         pst = conn.prepareStatement(checkQuery);
+
         pst.setString(1, username);
+
         rs = pst.executeQuery();
- 
+
         if (rs.next()) {
-            JOptionPane.showMessageDialog(this, "Username already exists!");
+
+            JOptionPane.showMessageDialog(this,
+                    "Username already exists!");
+
             return;
         }
- 
-        String insertQuery = "INSERT INTO Table1 (User_name, User_password) VALUES (?, ?)";
+
+        // Insert new account
+        String insertQuery =
+                "INSERT INTO Table1 (user_name, user_password) VALUES (?, ?)";
+
         pst = conn.prepareStatement(insertQuery);
+
         pst.setString(1, username);
         pst.setString(2, userpassword);
+
         pst.executeUpdate();
- 
-        JOptionPane.showMessageDialog(this, "Registration successful!");
- 
-        clearFields();
-        loadAccounts();
- 
+
+        JOptionPane.showMessageDialog(this,
+                "Registration successful!");
+
+        txt_username.setText("");
+        txt_password.setText("");
+
+        // Open login form
+        NewJFrame login = new NewJFrame();
+        login.setVisible(true);
+
+        // Close register form
+        this.dispose();
+
     } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Registration Error: " + e.getMessage());
+
+        JOptionPane.showMessageDialog(this,
+                "Registration Error: " + e.getMessage());
     }
     }                                        
  
@@ -208,7 +232,7 @@ public class Register extends javax.swing.JFrame {
     }
 
     String newUsername = txt_username.getText().trim();
-    String newPassword = String.valueOf(txt_pass.getPassword());
+    String newPassword = String.valueOf(txt_password.getPassword());
 
     if (newUsername.isEmpty() || newPassword.isEmpty()) {
         JOptionPane.showMessageDialog(
@@ -307,7 +331,7 @@ public class Register extends javax.swing.JFrame {
 
     private void clearFields() {
         txt_username.setText("");
-        txt_pass.setText("");
+        txt_password.setText("");
         selectedUsername = null;
         jTable1.clearSelection();
     
@@ -374,7 +398,7 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JPasswordField txt_pass;
+    private javax.swing.JPasswordField txt_password;
     private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
 }
